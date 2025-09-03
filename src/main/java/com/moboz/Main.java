@@ -66,13 +66,24 @@ public class Main {
 //                        (SELECT COUNT(e) FROM Enrollment e WHERE  e.student.id = s.id) > 1
 //                    """;
 
-            String jpql = """
-                    SELECT NEW com.moboz.dto.CountedEnrollmentForStudent (s, (SELECT count(e) FROM Enrollment e WHERE e.student = s))
-                    FROM Student s
-                    """;
+//            String jpql = """
+//                    SELECT NEW com.moboz.dto.CountedEnrollmentForStudent (s, (SELECT count(e) FROM Enrollment e WHERE e.student = s))
+//                    FROM Student s
+//                    """;
 
-            TypedQuery<CountedEnrollmentForStudent> q = em.createQuery(jpql, CountedEnrollmentForStudent.class);
-            q.getResultList().forEach(o-> System.out.println(o.student() + " " + o.count()));
+//            String jpql = """
+//                    SELECT NEW com.moboz.dto.CountedEnrollmentForStudent (s.name, count (s))
+//                    FROM Student s
+//                    GROUP BY s.name
+//                    HAVING s.name LIKE '%e'
+//                    ORDER BY s.name DESC
+//                    """;
+//
+//            TypedQuery<CountedEnrollmentForStudent> q = em.createQuery(jpql, CountedEnrollmentForStudent.class);
+
+
+            TypedQuery<Student> q = em.createNamedQuery("getAllEnrolledStudents", Student.class);
+            q.getResultList().forEach(System.out::println);
 
 
             em.getTransaction().commit();   //end of the transaction

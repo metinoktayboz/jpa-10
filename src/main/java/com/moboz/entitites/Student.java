@@ -1,12 +1,17 @@
 package com.moboz.entitites;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+
 
 import java.util.List;
 
 @Entity
+@NamedQueries(
+        @NamedQuery(name = "getAllEnrolledStudents",
+        query = """
+            SELECT s FROM Student s, Enrollment  e WHERE s.id = e.student.id
+        """)
+)
 public class Student {
 
     @Id
