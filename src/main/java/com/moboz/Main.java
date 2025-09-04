@@ -2,11 +2,10 @@ package com.moboz;
 
 import com.moboz.dto.CountedEnrollmentForStudent;
 import com.moboz.dto.EnrolledStudent;
+import com.moboz.entitites.DistinctStudent;
 import com.moboz.entitites.Student;
 import com.moboz.persistence.CustomPersistenceUnitInfo;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 
 import java.util.HashMap;
@@ -81,10 +80,27 @@ public class Main {
 //
 //            TypedQuery<CountedEnrollmentForStudent> q = em.createQuery(jpql, CountedEnrollmentForStudent.class);
 
+//            TypedQuery<Student> q = em.createNamedQuery("getAllEnrolledStudents", Student.class);
+//            q.getResultList().forEach(System.out::println);
 
-            TypedQuery<Student> q = em.createNamedQuery("getAllEnrolledStudents", Student.class);
-            q.getResultList().forEach(System.out::println);
+//            String sql = """
+//                    SELECT * FROM student
+//                    """;
+//
+//            Query q = em.createNativeQuery(sql, Student.class);
+//
+//            q.getResultList().forEach(student -> System.out.println(student));
 
+//            String sql = "SELECT s FROM DistinctStudent s";
+//
+//            TypedQuery<DistinctStudent> q = em.createQuery(sql, DistinctStudent.class);
+//            q.getResultList().forEach(System.out::println);
+
+            StoredProcedureQuery q = em.createStoredProcedureQuery("GetStudents", Student.class)
+                    .registerStoredProcedureParameter("id", Integer.class, ParameterMode.IN)
+                    .setParameter("id", 2);
+
+            q.getResultList().forEach(student -> System.out.println(student));
 
             em.getTransaction().commit();   //end of the transaction
         }

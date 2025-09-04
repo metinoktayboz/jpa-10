@@ -76,7 +76,7 @@ public class CustomPersistenceUnitInfo implements PersistenceUnitInfo {
 
     @Override
     public List<String> getManagedClassNames() {
-        return List.of("com.moboz.entitites.Course", "com.moboz.entitites.Student", "com.moboz.entitites.Enrollment");
+        return List.of("com.moboz.entitites.Course", "com.moboz.entitites.Student", "com.moboz.entitites.Enrollment", "com.moboz.entitites.DistinctStudent");
     }
 
     @Override
